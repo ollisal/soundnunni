@@ -1,5 +1,8 @@
 var LastFmNode = require('lastfm').LastFmNode;
+var events = require('events');
+var _ = require('underscore');
 
+var emitter = new events.EventEmitter();
 var lastfm = new LastFmNode({
 	api_key: '2e55eb71c0906983feda3a54452f85cf',
 	secret: '4381daef6a9f8b64a66d9406c6bb3811'
@@ -7,7 +10,7 @@ var lastfm = new LastFmNode({
 
 var updatingInfo = false;
 
-module.exports = {
+module.exports = _.extend(emitter, {
 	currentSongInfo:  null,
 	updateInfo: function(songInfo) {
 		if (updatingInfo || (module.exports.currentSongInfo &&
@@ -32,6 +35,7 @@ module.exports = {
 
 					updatingInfo = false;
 					console.log('Current song info updated!');
+					emitter.emit('lastFmInfoUpdated');
 				},
 				error: function(err) {
 					console.log('error track.getInfo: ', err);
@@ -41,4 +45,4 @@ module.exports = {
 			}
 		});
 	}
-};
+});

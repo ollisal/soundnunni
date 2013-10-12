@@ -35,6 +35,7 @@ if ('development' == app.get('env')) {
 
 io.sockets.on('connection', function(socket) {
   socket.emit('songChange', core.nowPlaying);
+  socket.emit('lastFmInfoUpdated');
 });
 
 app.get('/api/nowplaying', function(req, res) {
@@ -50,5 +51,9 @@ server.listen(app.get('port'), function(){
   core.start();
   core.on("songChange", function() {
   	io.sockets.emit('songChange', core.nowPlaying);
+  });
+
+  lastfm.on("lastFmInfoUpdated", function() {
+    io.sockets.emit('lastFmInfoUpdated');
   });
 });
