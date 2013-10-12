@@ -8,14 +8,19 @@ var lastfm = require('./lastfm');
 var running = false;
 
 var update = function(done) {
-	sampler.sample(function(hash) {
-		enest.lookUp(hash, function(songInfo) {
-			module.exports.nowPlaying = songInfo;
-			emitter.emit("songChange");
-			lastfm.updateInfo(songInfo);
-			done();
-		});
-	});
+  sampler.sample(function(hash) {
+    enest.lookUp(hash, function(error, songInfo) {
+      if (!error) {
+        module.exports.nowPlaying = songInfo;
+        emitter.emit("songChange");
+        lastfm.updateInfo(songInfo);
+        console.log('Updated song info');
+      } else {
+        console.log('Error while looking up song metadata from Echo Nest: ' + error);
+      }
+      done();
+    });
+  });
 };
 
 module.exports = _.extend(emitter, {
