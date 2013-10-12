@@ -7,6 +7,7 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var core = require('./core/core');
+var lastfm = require('./core/lastfm');
 var config = {
 	port: 3000
 };
@@ -32,12 +33,16 @@ if ('development' == app.get('env')) {
 // Serve static index
 //app.get('/', routes.index);
 
+io.sockets.on('connection', function(socket) {
+  socket.emit('songChange', core.nowPlaying);
+});
+
 app.get('/api/nowplaying', function(req, res) {
 	res.send(core.nowPlaying);
 });
 
-io.sockets.on('connection', function(socket) {
-	socket.emit('songChange', core.nowPlaying);
+app.get('/api/nowplaying/lastfm', function(req, res) {
+  res.send(lastfm.currentSongInfo);
 });
 
 server.listen(app.get('port'), function(){

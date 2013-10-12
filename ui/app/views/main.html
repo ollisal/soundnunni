@@ -2,5 +2,11 @@
   <h1>Now playing</h1>
   <div ng-controller="MainCtrl">
   	<p>{{nowPlaying.artist}} - {{nowPlaying.song}}</p>
+    <div ng-show="lastFmInfo">
+      <p>Kesto: {{lastFmInfo.duration.minutes}}:{{lastFmInfo.duration.seconds}}</p>
+      <p ng-show="lastFmInfo.album.name">{{lastFmInfo.album.name}} - {{lastFmInfo.album['@attr'].position}}</p>
+      <a ng-href="{{lastFmInfo.artist.url}}"><img ng-src="{{lastFmInfo.album.image[2]['#text']}}"></a>
+      <div ng-bind-html="lastFmInfo.wiki.summary"></div>
+    </div>
   </div>
 </div>

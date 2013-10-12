@@ -3,6 +3,7 @@ var emitter = new events.EventEmitter();
 var sampler = require('./fpsampler');
 var enest = require('./enest');
 var _ = require('underscore');
+var lastfm = require('./lastfm');
 
 var running = false;
 
@@ -11,6 +12,7 @@ var update = function(done) {
 		enest.lookUp(hash, function(songInfo) {
 			module.exports.nowPlaying = songInfo;
 			emitter.emit("songChange");
+			lastfm.updateInfo(songInfo);
 			done();
 		});
 	});

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('echoInYourFaceApp', ['btford.socket-io'])
+angular.module('echoInYourFaceApp', ['btford.socket-io', 'ngSanitize'])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
