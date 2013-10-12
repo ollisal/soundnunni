@@ -6,6 +6,7 @@
 var express = require('express');
 var http = require('http');
 var path = require('path');
+var url = require('url');
 var core = require('./core/core');
 var lastfm = require('./core/lastfm');
 var config = {
@@ -36,6 +37,7 @@ if ('development' == app.get('env')) {
 io.sockets.on('connection', function(socket) {
   socket.emit('songChange');
   socket.emit('lastFmInfoUpdated');
+  socket.emit('lastFmScrobblingStatusChanged', lastfm.isSessionActive());
 });
 
 app.get('/api/nowplaying', function(req, res) {
@@ -44,6 +46,20 @@ app.get('/api/nowplaying', function(req, res) {
 
 app.get('/api/nowplaying/lastfm', function(req, res) {
   res.send(lastfm.currentSongInfo);
+});
+
+app.get('/start-scrobbling', function(req, res) {
+  var cbUrl = 'http://' + req.headers.host + '/last-fm-authenticated';
+  res.redirect(lastfm.getAuthenticationUrl(cbUrl));
+});
+
+app.get('/last-fm-authenticated', function(req, res) {
+  console.log('Authenticated!');
+  var urlParts = url.parse(req.url, true);
+  var query = urlParts.query;
+  console.log('Token: ' + query.token);
+  lastfm.startSession(query.token);
+  res.redirect('');
 });
 
 server.listen(app.get('port'), function(){
@@ -55,5 +71,9 @@ server.listen(app.get('port'), function(){
 
   lastfm.on("lastFmInfoUpdated", function() {
     io.sockets.emit('lastFmInfoUpdated');
+  });
+
+  lastfm.on("lastFmScrobblingStatusChanged", function() {
+    io.sockets.emit('lastFmScrobblingStatusChanged', lastfm.isSessionActive());
   });
 });

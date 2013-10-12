@@ -1,4 +1,5 @@
 <div class="hero-unit">
+  <a ng-hide="lastFmScrobblingOn" href="/start-scrobbling">Start scrobbling</a>
   <h1>Now playing</h1>
   <div ng-controller="MainCtrl">
     <p ng-show="nowPlaying.artist">{{nowPlaying.artist}} - {{nowPlaying.song}}</p>

@@ -15,4 +15,9 @@ angular.module('echoInYourFaceApp')
       $scope.lastFmInfo = data;
     });
   });
+
+  socket.forward('lastFmScrobblingStatusChanged', $scope);
+  $scope.$on('socket:lastFmScrobblingStatusChanged', function (ev, scrobblingOn) {
+    $scope.lastFmScrobblingOn = scrobblingOn;
+  });
 });
