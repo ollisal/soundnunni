@@ -3,8 +3,10 @@
 angular.module('echoInYourFaceApp')
   .controller('MainCtrl', function ($scope, socket, $http) {
 	socket.forward('songChange', $scope);
-	$scope.$on('socket:songChange', function (ev, data) {
-		$scope.nowPlaying = data;
+	$scope.$on('socket:songChange', function (ev) {
+    $http.get('/api/nowplaying').success(function(data) {
+      $scope.nowPlaying = data;
+    });
   });
 
   socket.forward('lastFmInfoUpdated', $scope);

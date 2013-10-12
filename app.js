@@ -34,7 +34,7 @@ if ('development' == app.get('env')) {
 //app.get('/', routes.index);
 
 io.sockets.on('connection', function(socket) {
-  socket.emit('songChange', core.nowPlaying);
+  socket.emit('songChange');
   socket.emit('lastFmInfoUpdated');
 });
 
@@ -50,7 +50,7 @@ server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
   core.start();
   core.on("songChange", function() {
-  	io.sockets.emit('songChange', core.nowPlaying);
+    io.sockets.emit('songChange');
   });
 
   lastfm.on("lastFmInfoUpdated", function() {

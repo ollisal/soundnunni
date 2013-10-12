@@ -1,7 +1,7 @@
 <div class="hero-unit">
   <h1>Now playing</h1>
   <div ng-controller="MainCtrl">
-  	<p>{{nowPlaying.artist}} - {{nowPlaying.song}}</p>
+    <p ng-show="nowPlaying.artist">{{nowPlaying.artist}} - {{nowPlaying.song}}</p>
     <div ng-show="lastFmInfo">
       <p>Kesto: {{lastFmInfo.duration.minutes}}:{{lastFmInfo.duration.seconds}}</p>
       <p ng-show="lastFmInfo.album.name">{{lastFmInfo.album.name}} - {{lastFmInfo.album['@attr'].position}}</p>
