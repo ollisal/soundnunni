@@ -1,10 +1,8 @@
 'use strict';
 
 angular.module('echoInYourFaceApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('MainCtrl', function ($scope, $http) {
+    $http.get('/api/nowplaying').success(function(data) {
+    	$scope.nowPlaying = data;
+    });
   });
