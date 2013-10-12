@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('echoInYourFaceApp')
-  .controller('MainCtrl', function ($scope, $http) {
-    $http.get('/api/nowplaying').success(function(data) {
-    	$scope.nowPlaying = data;
-    });
+  .controller('MainCtrl', function ($scope, socket) {
+	socket.forward('songChange', $scope);
+	$scope.$on('socket:songChange', function (ev, data) {
+		$scope.nowPlaying = data;
+	});
   });

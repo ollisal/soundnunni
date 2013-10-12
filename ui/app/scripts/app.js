@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('echoInYourFaceApp', [])
+angular.module('echoInYourFaceApp', ['btford.socket-io'])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
