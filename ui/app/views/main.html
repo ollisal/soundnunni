@@ -1,13 +1,16 @@
-<div class="hero-unit">
-  <a ng-hide="lastFmScrobblingOn" href="/start-scrobbling">Start scrobbling</a>
-  <h1>Now playing</h1>
-  <div ng-controller="MainCtrl">
-    <p ng-show="nowPlaying.artist">{{nowPlaying.artist}} - {{nowPlaying.song}}</p>
-    <div ng-show="lastFmInfo">
-      <p>Kesto: {{lastFmInfo.duration.minutes}}:{{lastFmInfo.duration.seconds}}</p>
-      <p ng-show="lastFmInfo.album.name">{{lastFmInfo.album.name}} - {{lastFmInfo.album['@attr'].position}}</p>
-      <a ng-href="{{lastFmInfo.artist.url}}"><img ng-src="{{lastFmInfo.album.image[2]['#text']}}"></a>
-      <div ng-bind-html="lastFmInfo.wiki.summary"></div>
+<div ng-controller="MainCtrl">
+  <div ng-show="lastFmInfo">
+    <div class="panel left centered">
+      <a ng-href="{{lastFmInfo.artist.url}}"><img ng-src="{{lastFmInfo.album.image[2]['#text']}}" class="cover"></a>
     </div>
+    <div class="panel right">
+      <h2 ng-show="nowPlaying.artist">{{nowPlaying.artist}} - {{nowPlaying.song}}</h2>
+      <p>Duration: {{lastFmInfo.duration.minutes}}:{{lastFmInfo.duration.seconds}}</p>
+      <p ng-show="lastFmInfo.album.name">{{lastFmInfo.album.name}} - {{lastFmInfo.album['@attr'].position}}</p>
+      <div class="wikisummary" ng-bind-html="lastFmInfo.wiki.summary"></div>
+      <br><a class="btn scrobblebtn btn-default" ng-hide="lastFmScrobblingOn" href="/start-scrobbling">Start scrobbling</a>
+    </div>
+    <div class="darkbg"></div>
+    <img ng-show="fanarttvInfo.artistbackground[0].url" src="{{fanarttvInfo.artistbackground[0].url}}" class="bgimage">
   </div>
 </div>

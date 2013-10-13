@@ -9,6 +9,7 @@ var path = require('path');
 var url = require('url');
 var core = require('./core/core');
 var lastfm = require('./core/lastfm');
+var fanarttv = require('./core/fanarttv');
 var config = {
 	port: 3000
 };
@@ -48,6 +49,10 @@ app.get('/api/nowplaying/lastfm', function(req, res) {
   res.send(lastfm.currentSongInfo);
 });
 
+app.get('/api/nowplaying/fanarttv', function(req, res) {
+  res.send(fanarttv.currentSongInfo);
+});
+
 app.get('/start-scrobbling', function(req, res) {
   var cbUrl = 'http://' + req.headers.host + '/last-fm-authenticated';
   res.redirect(lastfm.getAuthenticationUrl(cbUrl));
@@ -75,5 +80,9 @@ server.listen(app.get('port'), function(){
 
   lastfm.on("lastFmScrobblingStatusChanged", function() {
     io.sockets.emit('lastFmScrobblingStatusChanged', lastfm.isSessionActive());
+  });
+
+  fanarttv.on("fanarttvInfoUpdated", function() {
+    io.sockets.emit('fanarttvInfoUpdated');
   });
 });

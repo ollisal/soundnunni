@@ -4,6 +4,7 @@ var sampler = require('./fpsampler');
 var enest = require('./enest');
 var _ = require('underscore');
 var lastfm = require('./lastfm');
+var fanarttv = require('./fanarttv');
 
 var running = false;
 
@@ -12,10 +13,11 @@ var update = function(done) {
     try {
       hash = JSON.parse(hash)[0].code;
       enest.lookUp(hash, function(error, songInfo) {
-        if (!error) {
+        if (!error && module.exports.nowPlaying.songId !== songInfo.songId) {
           module.exports.nowPlaying = songInfo;
           emitter.emit("songChange");
           lastfm.updateInfo(songInfo);
+          fanarttv.updateInfo(songInfo);
           console.log('Updated song info');
         } else {
           console.log('Error while looking up song metadata from Echo Nest: ' + error);

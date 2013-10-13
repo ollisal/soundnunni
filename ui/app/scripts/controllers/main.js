@@ -20,4 +20,11 @@ angular.module('echoInYourFaceApp')
   $scope.$on('socket:lastFmScrobblingStatusChanged', function (ev, scrobblingOn) {
     $scope.lastFmScrobblingOn = scrobblingOn;
   });
+
+  socket.forward('fanarttvInfoUpdated', $scope);
+  $scope.$on('socket:fanarttvInfoUpdated', function(ev) {
+  	$http.get('/api/nowplaying/fanarttv').success(function(data) {
+  		$scope.fanarttvInfo = data;
+  	});
+  });
 });

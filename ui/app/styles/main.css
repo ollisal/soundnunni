@@ -1,7 +1,80 @@
 body {
-    background: #fafafa;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #333;
+    background: #000;
+    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #fff;
+    overflow: hidden;
+}
+
+.wikisummary {
+    color: #bbb;
+    border-left: 3px solid #ddd;
+    padding-left: 15px;
+}
+
+.duration {
+    color: #ddd;
+}
+
+.scrobblebtn {
+    margin-top: 30px;
+}
+
+.darkbg {
+    background-color: rgba(0,0,0,0.9);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+.bgimage {
+    width: 100%;
+    z-index: -5;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.panel {
+    top: 18%;
+    position: absolute;
+    padding: 50px;
+}
+
+.centered > * {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.centered {
+    text-align: center;
+}
+
+.panel.left {
+    left: 0;
+    width: 33%;
+}
+
+.panel.right {
+    right: 0;
+    width: 55%;
+    padding-right: 7%;
+}
+
+.panel.bottom {
+    width: 100%;
+    bottom: 0;
+}
+
+.cover {
+    -webkit-box-shadow: 0px 0px 30px 10px rgba(255, 255, 255, 0.1);
+    box-shadow: 0px 0px 30px 10px rgba(255, 255, 255, 0.1);
+    width: 300px;
+    height: 300px;
 }
 
 .hero-unit {
