@@ -8,10 +8,7 @@ var querystring = require('querystring');
 module.exports = {
   lookUp: function(hash, done) {
     var url = 'http://developer.echonest.com/api/v4/song/identify?' +
-      querystring.stringify({
-        code: hash,
-        api_key: credentials.apiKey
-      });
+        'api_key=' + credentials.apiKey + '&version=4.12' + '&code=' + hash;
     var body = '';
     var request = http.get(url, function(response) {
       response.on('data', function(chunk) {
@@ -25,15 +22,17 @@ module.exports = {
               artist: '',
               song: ''
             };
+            console.log("Echo Nest reports " + json.response.songs.length + " matching songs\n");
             if (json.response.songs.length > 0) {
               var song = json.response.songs[0];
               songInfo.artist = song.artist_name || '';
               songInfo.song = song.title || '';
               songInfo.artistId = song.artist_id;
               songInfo.songId = song.id;
+              done(null /* no error */, songInfo);
+            } else {
+              done(new Error("No songs found"));
             }
-            done(null /* no error */, songInfo);
-            return; // success
           } else {
             done('Received an error HTTP status code: ' + response.statusCode);
           }

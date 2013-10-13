@@ -10,6 +10,7 @@ var running = false;
 var update = function(done) {
   sampler.sample(function(hash) {
     try {
+      hash = JSON.parse(hash)[0].code;
       enest.lookUp(hash, function(error, songInfo) {
         if (!error) {
           module.exports.nowPlaying = songInfo;

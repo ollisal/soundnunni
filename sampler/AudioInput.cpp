@@ -3,7 +3,7 @@
 #include <iostream>
 
 #define SAMPLE_RATE (22050)
-#define CHUNK_SIZE (2048)
+#define CHUNK_SIZE (SAMPLE_RATE)
 
 namespace nunni
 {

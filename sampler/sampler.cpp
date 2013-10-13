@@ -77,7 +77,7 @@ class SampleJob
 
             std::cout << "Spawning codegen child" << std::endl;
 
-            if (!CreateProcess("C:\\windows\\system32\\cmd.exe", "/C codegen.windows.exe audio.wav > code.out", NULL, NULL, TRUE, NORMAL_PRIORITY_CLASS | CREATE_NO_WINDOW, NULL, NULL, &siStartInfo, &piProcInfo)) {
+            if (!CreateProcess("C:\\windows\\system32\\cmd.exe", "/C codegen.exe audio.wav > code.out", NULL, NULL, TRUE, NORMAL_PRIORITY_CLASS | CREATE_NO_WINDOW, NULL, NULL, &siStartInfo, &piProcInfo)) {
                 // CreateProcess() failed
                 // Get the error from the system
                 LPVOID lpMsgBuf;
