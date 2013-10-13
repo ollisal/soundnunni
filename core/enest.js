@@ -3,11 +3,15 @@ var count = 0;
 var credentials = require('./enest-credentials.js');
 
 var http = require('http');
+var querystring = require('querystring');
 
 module.exports = {
   lookUp: function(hash, done) {
-    var url = 'http://developer.echonest.com/api/v4/song/identify?api_key=' +
-        credentials.apiKey + '&code=' + hash;
+    var url = 'http://developer.echonest.com/api/v4/song/identify?' +
+      querystring.stringify({
+        code: hash,
+        api_key: credentials.apiKey
+      });
     var body = '';
     var request = http.get(url, function(response) {
       response.on('data', function(chunk) {
